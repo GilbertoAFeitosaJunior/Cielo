@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<requisicao-transacao id="6e5660dd-5966-47f5-9f17-4a9417b73cbf" versao="1.2.1">
+	<dados-ec>
+		<numero>1066272546</numero>
+		<chave>542cb21e8e7c8b2853c76f62cdbf257c315857cfca725c461e5e6cacc1ea6dd0</chave>
+	</dados-ec>
+	<dados-portador>
+		<numero>4012001038443335</numero>
+		<validade>201805</validade>
+		<indicador>1</indicador>
+		<codigo-seguranca>123</codigo-seguranca>
+	</dados-portador>
+	<dados-pedido>
+		<numero>1</numero>
+		<valor>10000</valor>
+		<moeda>986</moeda>
+		<data-hora>2015-12-22T11:43:37</data-hora>
+		<descricao>Teste</descricao>
+		<idioma>PT</idioma>
+		<soft-descriptor>teste</soft-descriptor>
+	</dados-pedido>
+	<forma-pagamento>
+		<bandeira>visa</bandeira>
+		<produto>2</produto>
+		<parcelas>2</parcelas>
+	</forma-pagamento>
+	<url-retorno>https://google.com.br</url-retorno>
+	<autorizar>3</autorizar>
+	<capturar>true</capturar>
+</requisicao-transacao>
+
