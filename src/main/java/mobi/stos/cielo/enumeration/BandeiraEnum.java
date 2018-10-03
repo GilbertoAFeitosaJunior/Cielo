@@ -3,13 +3,14 @@ package mobi.stos.cielo.enumeration;
 public enum BandeiraEnum {
 
     VISA("Visa", "vs"),
-    MARTERCARD("MasterCard", "mc"),
+    MASTERCARD("MasterCard", "mc"),
     DINERS("Diners", "dn"),
     DISCOVER("Discover", "ds"),
     ELO("Elo", "el"),
     AMEX("Amex", "am"),
     JCB("JCB", "jc"),
-    AURA("Aura", "au");
+    AURA("Aura", "au"),
+    HIPERCARD("Hipercard", "");
 
     final String nomeApresentacao;
     final String sigla;

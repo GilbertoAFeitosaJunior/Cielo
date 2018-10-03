@@ -18,5 +18,58 @@
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
     
+    <url>https://github.com/weibsons/Cielo</url>
+  
+    <prerequisites>
+        <maven>2.0.9</maven>
+    </prerequisites>
+          
+    <description>
+        Biblioteca para fazer checkout com ferramenta da Cielo somente com Cartão de Crédito.
+    </description>
+  
+    <developers>
+        <developer>
+            <name>S'tos</name>
+            <id>weibson@stos.mobi</id>
+            <email>weibson@stos.mobi</email>
+            <organization>S'tos</organization>
+            <roles>
+                <role>Programmer</role>
+            </roles>
+            <timezone>-3</timezone>
+        </developer>
+    </developers>
+  
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>nexus-releases</name>
+            <url>http://stos.mobi:8080/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>nexus-snapshots</name>
+            <url>http://stos.mobi:8080/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+  
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <name>nexus</name>
+            <url>http://stos.mobi:8080/nexus/content/groups/public</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>snapshots</id>
+            <url>http://stos.mobi:8080/nexus/content/groups/public-snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
     
 </project>

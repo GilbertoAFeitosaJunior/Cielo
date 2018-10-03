@@ -13,7 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.TimeZone;
-import javax.xml.parsers.ParserConfigurationException;
 import mobi.stos.cielo.bean.request.CartaoCredito;
 import mobi.stos.cielo.bean.request.Loja;
 import mobi.stos.cielo.bean.request.Pedido;
@@ -35,7 +34,6 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import org.xml.sax.SAXException;
 
 public class Checkout {
 
@@ -63,7 +61,6 @@ public class Checkout {
 //            System.out.println("Return null");
 //        }
 //    }
-
     /**
      * *
      * Função cria Transação Cielo via Cartão de Crédito. Não funcionará via
@@ -88,8 +85,8 @@ public class Checkout {
 
     public Object test() throws IOException, JDOMException, ParseException {
         Loja loja = new Loja();
-        loja.setChave("0");
-        loja.setMerchantId("0");
+        loja.setChave("");
+        loja.setMerchantId("");
         loja.setCodigoEstabelecimento(0);
 
         Pedido pedido = new Pedido();
@@ -104,9 +101,9 @@ public class Checkout {
 
         CartaoCredito cartao = new CartaoCredito();
         cartao.setBandeira(BandeiraEnum.VISA);
-        cartao.setNumCartao(4984425424292960l);
-        cartao.setCodigoSeguranca(123);
-        cartao.setValidade("202011");
+        cartao.setNumCartao(0);
+        cartao.setCodigoSeguranca(0);
+        cartao.setValidade("");
 
         String content = buildTransactionXML(loja, pedido, cartao, "https://avaloa.com.br/", "c:\\temp\\");
         return sendPOST(content);
@@ -132,7 +129,7 @@ public class Checkout {
             dados_portador.addContent(new Element("numero").setText(String.valueOf(cartao.getNumCartao())));
             dados_portador.addContent(new Element("validade").setText(cartao.getValidade()));
             dados_portador.addContent(new Element("indicador").setText("1"));
-            dados_portador.addContent(new Element("codigo-seguranca").setText(String.valueOf(cartao.getCodigoSeguranca())));
+            dados_portador.addContent(new Element("codigo-seguranca").setText(zeroFill(cartao.getCodigoSeguranca(), 3)));
             doc.getRootElement().addContent(dados_portador);
             //</editor-fold>
 
@@ -274,7 +271,7 @@ public class Checkout {
                                 captura.setMensagem(e.getText());
                                 break;
                             case "data-hora":
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                                 sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
                                 captura.setDataHora(sdf.parse(e.getText()));
                                 break;
@@ -295,7 +292,7 @@ public class Checkout {
                                 autenticacao.setMensagem(e.getText());
                                 break;
                             case "data-hora":
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                                 sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
                                 autenticacao.setDataHora(sdf.parse(e.getText()));
                                 break;
@@ -319,7 +316,7 @@ public class Checkout {
                                 autorizacao.setMensagem(e.getText());
                                 break;
                             case "data-hora":
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                                 sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
                                 autorizacao.setDataHora(sdf.parse(e.getText()));
                                 break;
@@ -368,7 +365,7 @@ public class Checkout {
                                 pedido.setMoeda(MoedaEnum.valueOfCodigo(e.getText()));
                                 break;
                             case "data-hora":
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                                 sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
                                 pedido.setDataHora(sdf.parse(e.getText()));
                                 break;
@@ -425,6 +422,28 @@ public class Checkout {
             System.out.println("Erro ao criar XML: " + e.getMessage());
             return null;
         }
+    }
+
+    /**
+     * Função adiciona zeros a esquerda
+     *
+     * @param valor
+     * @param zeros
+     * @return
+     */
+    private String zeroFill(Object valor, int zeros) {
+        String sValor = String.valueOf(valor);
+        if (sValor.length() > zeros) {
+            return sValor;
+        }
+
+        int restantes = zeros - sValor.length();
+        String zadd = "";
+        for (int i = 0; i < restantes; i++) {
+            zadd += "0";
+        }
+
+        return zadd.concat(sValor);
     }
 
 }
